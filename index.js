@@ -1,13 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const boom = require('boom');
 const productsApiRouter = require('./routes/api/products');
 
 const { 
   logErrors, 
+  wrapErrors,
   clientErrorHandler, 
   errorHandler 
 } = require('./utils/middlewares/errorsHandlers');
+
+const isRequestAjaxOrApi = require('./utils/isRequestAjaxOrApi');
 
 // App
 const app = express();
@@ -26,8 +30,17 @@ app.get('/', function(req, res) {
   res.redirect('/api/products');
 });
 
+app.use(function(req, res, next) {
+  if(isRequestAjaxOrApi(req)) {
+    const { statusCode, payload } = boom.notFound();
+    res.status(statusCode).json(payload);
+  }
+  res.status(404).json({ err: 'Page not found'});
+});
+
 // Error Handlers
 app.use(logErrors);
+app.use(wrapErrors);
 app.use(clientErrorHandler);
 app.use(errorHandler);
 
