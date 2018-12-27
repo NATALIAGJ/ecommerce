@@ -7,7 +7,9 @@ const config = {
     dbPassword: process.env.DB_PASSWORD,
     dbHost: process.env.DB_HOST,
     dbPort: process.env.DB_PORT,
-    dbName: process.env.DB_NAME
+    dbName: process.env.DB_NAME,
+    sentryDns: process.env.SENTRY_DNS,
+    sentryId: process.env.SENTRY_ID
 };
 
 module.exports = { config };
