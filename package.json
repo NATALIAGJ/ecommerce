@@ -25,5 +25,8 @@
     "express": "^4.16.4",
     "joi": "^14.3.0",
     "mongodb": "^3.1.10"
+  },
+  "devDependencies": {
+    "express-debug": "^1.1.1"
   }
 }

@@ -3,11 +3,11 @@ const router = express.Router();
 const ProductsService = require("../../services/products");
 
 const {
-  productIdSchema, 
-  productTagSchema, 
-  createProductSchema, 
-  updateProductSchema 
-} = require('../../utils/schemas/products');
+  productIdSchema,
+  productTagSchema,
+  createProductSchema,
+  updateProductSchema
+} = require("../../utils/schemas/products");
 
 const validation = require('../../utils/middlewares/validationHandler');
 
@@ -39,13 +39,19 @@ router.get("/:productId", async function(req, res, next) {
   }
 });
 
-router.post("/", validation(createProductSchema), async function(req, res, next) {
+router.post("/", validation(createProductSchema), async function(
+  req,
+  res,
+  next
+) {
   const { body: product } = req;
+
   try {
-    const createProduct = await productService.createProduct({ product });
-    res.status(200).json({
-      data: createProduct,
-      message: "product create"
+    const createdProduct = await productService.createProduct({ product });
+
+    res.status(201).json({
+      data: createdProduct,
+      message: "product created"
     });
   } catch (err) {
     next(err);
@@ -53,22 +59,27 @@ router.post("/", validation(createProductSchema), async function(req, res, next)
 });
 
 router.put(
-  "/:productId", 
-  validation({ productId: productIdSchema }, "params"),  
-  validation(updateProductSchema), 
+  "/:productId",
+  validation({ productId: productIdSchema }, "params"),
+  validation(updateProductSchema),
   async function(req, res, next) {
     const { productId } = req.params;
     const { body: product } = req;
+
     try {
-      const updateProduct = await productService.updateProduct({ productId, product });
+      const updatedProduct = await productService.updateProduct({
+        productId,
+        product
+      });
       res.status(200).json({
-        data: updateProduct,
-        message: "product update"
+        data: updatedProduct,
+        message: "product updated"
       });
     } catch (err) {
       next(err);
     }
-  });
+  }
+);
 
 
 router.delete("/:productId", async function(req, res, next) {

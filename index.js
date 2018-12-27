@@ -32,7 +32,7 @@ app.get('/', function(req, res) {
 
 app.use(function(req, res, next) {
   if(isRequestAjaxOrApi(req)) {
-    const { statusCode, payload } = boom.notFound();
+    const { output: { statusCode, payload } } = boom.notFound();
     res.status(statusCode).json(payload);
   }
   res.status(404).json({ err: 'Page not found'});
