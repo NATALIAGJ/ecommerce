@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const boom = require('boom');
 const productsApiRouter = require('./routes/api/products');
+const authApiRouter = require('./routes/api/auth');
 
 const { 
   logErrors, 
@@ -24,6 +25,7 @@ app.use('/static', express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/api/products', productsApiRouter);
+app.use('/api/auth', authApiRouter);
 
 // Redirect
 app.get('/', function(req, res) {
